@@ -8,10 +8,13 @@
       name="description"
       content="Как mobile и web-клиентский опыт брокера для HNWI/UHNWI влияет на churn, AUM, share-of-wallet и прибыльность."
     />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -411,6 +414,436 @@
         text-underline-offset: 3px;
       }
 
+      /* Visual refresh based on local CRM/Strategy/Visual reference */
+      :root {
+        color-scheme: light;
+        --panel: rgba(255, 255, 255, 0.82);
+        --panel-2: rgba(255, 255, 255, 0.94);
+        --line: rgba(0, 85, 255, 0.12);
+        --text: #251618;
+        --muted: rgba(37, 22, 24, 0.72);
+        --aqua: #0055ff;
+        --cyan: #008cff;
+        --gold: #6b4cff;
+        --coral: #0ea5c9;
+        --shadow: 0 18px 48px rgba(0, 65, 180, 0.12);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 15% 75%, rgba(139, 92, 246, 0.12), transparent 22%),
+          radial-gradient(circle at 82% 12%, rgba(0, 85, 255, 0.24), transparent 26%),
+          linear-gradient(180deg, #f3f6fb 0%, #edf2fb 48%, #f7f9fd 100%);
+      }
+
+      body::before {
+        background:
+          linear-gradient(rgba(0, 85, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 85, 255, 0.03) 1px, transparent 1px);
+        opacity: 0.85;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+      }
+
+      .particles-canvas,
+      .grid-overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .particles-canvas {
+        z-index: 0;
+      }
+
+      .grid-overlay {
+        z-index: 0;
+        background:
+          linear-gradient(rgba(0, 85, 255, 0.015) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 85, 255, 0.015) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(circle at center, black 42%, transparent 95%);
+      }
+
+      .topbar {
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 10px 30px rgba(0, 65, 180, 0.08);
+      }
+
+      .topbar.scrolled {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(0, 85, 255, 0.16);
+      }
+
+      .brand-copy small,
+      .nav a,
+      .meta a,
+      .sources a,
+      .cite a {
+        color: rgba(37, 22, 24, 0.56);
+      }
+
+      .brand-mark {
+        color: #fff;
+        background: linear-gradient(135deg, #0055ff, #0ea5c9);
+        box-shadow: 0 10px 24px rgba(0, 85, 255, 0.22);
+      }
+
+      h1,
+      h2,
+      .big,
+      blockquote {
+        font-family: "Inter", sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 0.98;
+      }
+
+      h1 span,
+      .big,
+      .metric strong {
+        color: inherit;
+      }
+
+      h1 .gradient-text,
+      .gradient-text {
+        background: linear-gradient(135deg, #0055ff 0%, #4f6fff 45%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      h1 {
+        max-width: 12ch;
+        font-size: clamp(3.3rem, 7.4vw, 6.6rem);
+      }
+
+      h2 {
+        font-size: clamp(2.15rem, 4.2vw, 3.2rem);
+      }
+
+      .section {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.92));
+        backdrop-filter: blur(18px) saturate(160%);
+      }
+
+      .section::after {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4),
+          transparent 24%,
+          transparent 72%,
+          rgba(0, 85, 255, 0.05)
+        );
+      }
+
+      .hero {
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 20% 90%, rgba(167, 139, 250, 0.18), transparent 24%),
+          radial-gradient(circle at 100% 8%, rgba(0, 85, 255, 0.26), transparent 30%),
+          linear-gradient(135deg, #eef3fb 0%, #d8e4f7 34%, #0055d6 76%, #0099cc 100%);
+        color: #251618;
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(0);
+        animation: drift 14s ease-in-out infinite;
+      }
+
+      .hero::before {
+        top: 8%;
+        right: -4%;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.32), transparent 64%);
+      }
+
+      .hero::after {
+        bottom: -6%;
+        left: 8%;
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(124, 58, 237, 0.18), transparent 66%);
+        animation-delay: -4s;
+      }
+
+      .hero p,
+      .hero li {
+        color: rgba(37, 22, 24, 0.76);
+      }
+
+      .eyebrow {
+        color: #0055ff;
+        font-weight: 700;
+      }
+
+      .button {
+        box-shadow: 0 8px 22px rgba(0, 85, 255, 0.12);
+      }
+
+      .button-primary {
+        color: #fff;
+        background: linear-gradient(135deg, #0055ff, #0ea5c9);
+      }
+
+      .button-secondary {
+        border-color: rgba(0, 85, 255, 0.14);
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .button-ghost,
+      .pill {
+        color: #0055ff;
+        border-color: rgba(0, 85, 255, 0.18);
+        background: rgba(0, 85, 255, 0.08);
+      }
+
+      .card,
+      .metric,
+      .quote-card,
+      .source-card,
+      .video-wrap {
+        background: rgba(255, 255, 255, 0.72);
+        border-color: rgba(0, 85, 255, 0.1);
+        box-shadow: 0 12px 28px rgba(0, 70, 190, 0.08);
+        transition:
+          transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 320ms ease,
+          border-color 320ms ease;
+      }
+
+      .card:hover,
+      .metric:hover,
+      .quote-card:hover,
+      .source-card:hover,
+      .video-wrap:hover {
+        transform: translateY(-4px);
+        border-color: rgba(0, 85, 255, 0.22);
+        box-shadow: 0 18px 38px rgba(0, 70, 190, 0.14);
+      }
+
+      .metric strong,
+      .big {
+        font-weight: 900;
+        font-size: clamp(2.2rem, 4vw, 3.3rem);
+      }
+
+      .hero-grid .metric:nth-child(1) strong,
+      .hero-grid .metric:nth-child(4) strong,
+      .facts-grid .big,
+      .facts-grid strong {
+        color: #0055ff;
+      }
+
+      .hero-grid .metric:nth-child(2) strong,
+      .hero-grid .metric:nth-child(3) strong {
+        color: #7c3aed;
+      }
+
+      .bar,
+      .split {
+        background: rgba(0, 85, 255, 0.08);
+      }
+
+      .js .reveal {
+        opacity: 0;
+        transform: translateY(36px);
+        transition:
+          opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .js .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .js .bar span,
+      .js .split span,
+      .js .donut-ring::before,
+      .js .mini-col span {
+        transform-origin: left center;
+      }
+
+      .bar span {
+        transform: scaleX(0);
+        transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .visible .bar span {
+        transform: scaleX(1);
+      }
+
+      .fact-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .fact-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #0055ff;
+        background: rgba(0, 85, 255, 0.08);
+      }
+
+      .compare-row,
+      .legend-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        margin-top: 12px;
+        font-size: 0.78rem;
+        color: rgba(37, 22, 24, 0.64);
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      .duo-stats,
+      .value-stack,
+      .mini-cols {
+        display: grid;
+        gap: 12px;
+      }
+
+      .duo-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .value-stack {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .duo-stats > div,
+      .value-stack > div {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(0, 85, 255, 0.08);
+      }
+
+      .donut-wrap {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .donut-ring {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: conic-gradient(#0055ff 0 49%, rgba(0, 85, 255, 0.12) 49% 100%);
+        animation: pulse-ring 4.2s ease-in-out infinite;
+      }
+
+      .donut-ring::after {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: inset 0 0 0 1px rgba(0, 85, 255, 0.06);
+      }
+
+      .donut-label {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        z-index: 1;
+        padding: 46px;
+      }
+
+      .donut-label strong {
+        display: block;
+        font-size: 3rem;
+        color: #0055ff;
+      }
+
+      .mini-cols {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 10px;
+      }
+
+      .mini-col {
+        display: grid;
+        align-items: end;
+        gap: 10px;
+        padding: 16px;
+        min-height: 180px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(0, 85, 255, 0.08);
+      }
+
+      .mini-col span {
+        display: block;
+        width: 100%;
+        border-radius: 14px 14px 6px 6px;
+        background: linear-gradient(180deg, rgba(0, 85, 255, 0.85), rgba(124, 58, 237, 0.8));
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .visible .mini-col span {
+        transform: scaleY(1);
+      }
+
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+        50% {
+          transform: translate3d(0, -18px, 0);
+        }
+      }
+
+      @keyframes pulse-ring {
+        0%,
+        100% {
+          box-shadow: 0 12px 28px rgba(0, 85, 255, 0.14);
+        }
+        50% {
+          box-shadow: 0 18px 40px rgba(0, 85, 255, 0.2);
+        }
+      }
+
       @media (max-width: 1080px) {
         .hero,
         .roi-grid,
@@ -421,6 +854,12 @@
 
         .thesis-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .value-stack,
+        .duo-stats,
+        .donut-wrap {
+          grid-template-columns: 1fr;
         }
 
         .span-4,
@@ -452,7 +891,11 @@
         .cover-card,
         .quote-grid,
         .sources,
-        .facts-grid {
+        .facts-grid,
+        .value-stack,
+        .duo-stats,
+        .mini-cols,
+        .donut-wrap {
           grid-template-columns: 1fr;
         }
 
@@ -475,6 +918,8 @@
     </style>
   </head>
   <body>
+    <div class="grid-overlay"></div>
+    <canvas id="particles" class="particles-canvas"></canvas>
     <main class="page">
       <header class="topbar">
         <a class="brand" href="#top">
@@ -497,7 +942,7 @@
           <p class="eyebrow">Research x Product x Wealth Management</p>
           <h1>
             Цифровое трение:
-            <span>как mobile и web брокера влияют на AUM, churn и прибыль</span>
+            <span class="gradient-text">как mobile и web брокера влияют на AUM, churn и прибыль</span>
           </h1>
           <p>
             Эта страница собрана на основе приложенного исследования о том, как клиентский
@@ -614,52 +1059,98 @@
         <h2>Ключевые факты и where the money moves</h2>
         <div class="facts-grid">
           <article class="card span-4">
-            <h3>Digital уже влияет на выбор провайдера</h3>
-            <p>55% HNWI считают digital-опыт критичным при выборе wealth-фирмы.</p>
-            <div class="bar" style="margin: 14px 0 10px; --value: 55%">
+            <div class="fact-title">
+              <h3>Digital уже влияет на выбор провайдера</h3>
+              <span class="fact-chip">Choice driver</span>
+            </div>
+            <div class="compare-row">
+              <p>Digital critical in provider choice</p>
+              <strong>55%</strong>
+            </div>
+            <div class="bar" style="margin: 10px 0 12px; --value: 55%">
               <span></span>
             </div>
-            <p>47% недовольны цифровым интерфейсом текущего провайдера.</p>
-            <div class="bar alt" style="margin-top: 14px; --value: 47%">
+            <div class="compare-row">
+              <p>Dissatisfied with current interface</p>
+              <strong>47%</strong>
+            </div>
+            <div class="bar alt" style="margin-top: 10px; --value: 47%">
               <span></span>
             </div>
+            <p style="margin-top: 14px">
+              Digital перестал быть nice-to-have: это уже элемент доверия, выбора и удержания.
+            </p>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=1">PDF, стр. 1</a>
             </div>
           </article>
 
           <article class="card span-4">
-            <h3>Активы находятся в движении</h3>
+            <div class="fact-title">
+              <h3>Активы находятся в движении</h3>
+              <span class="fact-chip">Money in motion</span>
+            </div>
             <div class="split" style="margin: 10px 0 14px">
               <span class="split-a">14% add</span>
               <span class="split-b">21% move</span>
               <span class="split-c">9% switch</span>
             </div>
-            <p>44% wealth-клиентов планируют изменить отношения с провайдерами за ~3 года.</p>
-            <p>Более половины из них готовы перевести свыше 25% активов.</p>
+            <p><strong>44%</strong> wealth-клиентов планируют изменить отношения с провайдерами за ~3 года.</p>
+            <p>Более половины из них готовы перевести свыше 25% активов, а 11% — большую часть капитала.</p>
+            <div class="legend">
+              <span><i class="legend-dot" style="background: rgba(86, 207, 255, 0.55)"></i>добавить провайдера</span>
+              <span><i class="legend-dot" style="background: rgba(132, 241, 218, 0.48)"></i>перевести часть средств</span>
+              <span><i class="legend-dot" style="background: rgba(255, 145, 127, 0.48)"></i>полностью сменить</span>
+            </div>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
             </div>
           </article>
 
           <article class="card span-4">
-            <h3>Удержание RM = удержание AUM</h3>
-            <p><span class="big">62%</span> Next-gen HNWI готовы последовать за RM.</p>
-            <p><span class="big">56%</span> RM считают, что фирма не даёт нужных инструментов.</p>
+            <div class="fact-title">
+              <h3>Удержание RM = удержание AUM</h3>
+              <span class="fact-chip">Advisor gravity</span>
+            </div>
+            <div class="duo-stats">
+              <div>
+                <span class="big">62%</span>
+                <p>Next-gen HNWI готовы последовать за RM при его переходе.</p>
+              </div>
+              <div>
+                <span class="big">56%</span>
+                <p>RM считают, что фирма не даёт им нужных digital-инструментов.</p>
+              </div>
+            </div>
+            <p style="margin-top: 14px">
+              Это не HR-история отдельно от продукта: RM tooling напрямую влияет на churn верхнего сегмента.
+            </p>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
             </div>
           </article>
 
           <article class="card span-6">
-            <h3>Верхний сегмент непропорционально влияет на прибыль</h3>
-            <p>
-              <span class="big">11.5 тыс.</span>
-              клиентов с портфелем свыше 100 млн ₽ контролировали около 5.2 трлн ₽, то есть
-              примерно 49% активов физлиц у брокеров на конец 2024 года.
-            </p>
-            <div class="bar" style="margin-top: 16px; --value: 49%">
-              <span></span>
+            <div class="fact-title">
+              <h3>Верхний сегмент непропорционально влияет на прибыль</h3>
+              <span class="fact-chip">Russia concentration</span>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut-ring">
+                <div class="donut-label">
+                  <div>
+                    <strong>49%</strong>
+                    <p>активов физлиц у брокеров</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p><span class="big">11.5 тыс.</span> клиентов с портфелем свыше 100 млн ₽.</p>
+                <p><span class="big">5.2 трлн ₽</span> активов под контролем этой группы на конец 2024 года.</p>
+                <p>
+                  Даже небольшое снижение AUM attrition в этом слое клиентов даёт диспропорциональный эффект на P&amp;L.
+                </p>
+              </div>
             </div>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=1">PDF, стр. 1</a>
@@ -667,10 +1158,36 @@
           </article>
 
           <article class="card span-6">
-            <h3>Запрос смещается от “сохранить” к “управлять сложностью”</h3>
-            <p><span class="big">78%</span> UHNWI считают value-added услуги essential.</p>
-            <p><span class="big">65%</span> HNWI беспокоит нехватка персонализированного advice.</p>
-            <p><span class="big">+72 / +47</span> пункта satisfaction дают virtual assistants у advised / DIY сегментов.</p>
+            <div class="fact-title">
+              <h3>Запрос смещается от “сохранить” к “управлять сложностью”</h3>
+              <span class="fact-chip">Value-added and DX</span>
+            </div>
+            <div class="value-stack">
+              <div>
+                <span class="big">78%</span>
+                <p>UHNWI считают value-added услуги essential.</p>
+              </div>
+              <div>
+                <span class="big">65%</span>
+                <p>HNWI беспокоит нехватка персонализированного advice.</p>
+              </div>
+              <div>
+                <span class="big">&gt;77%</span>
+                <p>ожидают помощи по межпоколенческой передаче капитала.</p>
+              </div>
+            </div>
+            <div class="mini-cols">
+              <div class="mini-col">
+                <span style="height: 72%"></span>
+                <strong>+72</strong>
+                <p>пункта satisfaction у advised-клиентов при наличии virtual assistant.</p>
+              </div>
+              <div class="mini-col">
+                <span style="height: 47%"></span>
+                <strong>+47</strong>
+                <p>пунктов satisfaction у DIY-сегмента при использовании assistant.</p>
+              </div>
+            </div>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=3">PDF, стр. 3</a>
               <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
@@ -838,18 +1355,107 @@
     </main>
 
     <script>
-      const sections = document.querySelectorAll(".reveal");
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
+      document.addEventListener("DOMContentLoaded", () => {
+        const header = document.querySelector(".topbar");
+        const navLinks = document.querySelectorAll(".nav a");
+        const sections = document.querySelectorAll("section[id]");
+        const reveals = document.querySelectorAll(".reveal");
+
+        const onScroll = () => {
+          header.classList.toggle("scrolled", window.scrollY > 40);
+
+          let current = "";
+          sections.forEach((section) => {
+            const top = section.offsetTop - 140;
+            if (window.scrollY >= top) {
+              current = section.id;
+            }
           });
-        },
-        { threshold: 0.14, rootMargin: "0px 0px -6% 0px" },
-      );
-      sections.forEach((section) => observer.observe(section));
+
+          navLinks.forEach((link) => {
+            link.style.color =
+              link.getAttribute("href") === `#${current}` ? "#0055ff" : "rgba(37, 22, 24, 0.56)";
+          });
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.18, rootMargin: "0px 0px -40px 0px" },
+        );
+
+        reveals.forEach((item) => revealObserver.observe(item));
+
+        const canvas = document.getElementById("particles");
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        let width = 0;
+        let height = 0;
+        let particles = [];
+
+        const resize = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+          particles = Array.from({ length: Math.min(64, Math.floor((width * height) / 22000)) }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 1.4 + 0.6,
+            speedX: (Math.random() - 0.5) * 0.18,
+            speedY: (Math.random() - 0.5) * 0.18,
+            alpha: Math.random() * 0.4 + 0.12,
+          }));
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, width, height);
+
+          particles.forEach((particle) => {
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+
+            if (particle.x < 0 || particle.x > width || particle.y < 0 || particle.y > height) {
+              particle.x = Math.random() * width;
+              particle.y = Math.random() * height;
+            }
+
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 85, 255, ${particle.alpha})`;
+            ctx.fill();
+          });
+
+          for (let i = 0; i < particles.length; i += 1) {
+            for (let j = i + 1; j < particles.length; j += 1) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist > 110) continue;
+
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(0, 85, 255, ${0.06 * (1 - dist / 110)})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+
+          requestAnimationFrame(draw);
+        };
+
+        resize();
+        window.addEventListener("resize", resize);
+        draw();
+      });
     </script>
   </body>
 </html>
