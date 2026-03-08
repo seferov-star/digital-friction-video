@@ -372,6 +372,27 @@
         font-size: 0.8rem;
       }
 
+      .split.clean {
+        height: 28px;
+        border-radius: 999px;
+      }
+
+      .split.clean span {
+        font-size: 0;
+      }
+
+      .split.clean .split-a {
+        border-radius: 999px 0 0 999px;
+      }
+
+      .split.clean .split-b {
+        border-radius: 0;
+      }
+
+      .split.clean .split-c {
+        border-radius: 0 999px 999px 0;
+      }
+
       .split-a {
         width: 14%;
         background: rgba(86, 207, 255, 0.38);
@@ -692,6 +713,13 @@
         margin-bottom: 12px;
       }
 
+      .fact-title-stack {
+        display: grid;
+        justify-content: start;
+        gap: 8px;
+        align-items: start;
+      }
+
       .fact-chip {
         display: inline-flex;
         align-items: center;
@@ -702,6 +730,8 @@
         font-weight: 700;
         color: #0055ff;
         background: rgba(0, 85, 255, 0.08);
+        width: fit-content;
+        white-space: nowrap;
       }
 
       .compare-row,
@@ -720,6 +750,32 @@
         margin-top: 12px;
         font-size: 0.78rem;
         color: rgba(37, 22, 24, 0.64);
+      }
+
+      .split-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .split-metrics > div {
+        padding: 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(0, 85, 255, 0.08);
+      }
+
+      .split-metrics strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.35rem;
+        line-height: 1;
+      }
+
+      .split-metrics small {
+        color: rgba(37, 22, 24, 0.64);
+        line-height: 1.4;
       }
 
       .legend-dot {
@@ -894,6 +950,7 @@
         .facts-grid,
         .value-stack,
         .duo-stats,
+        .split-metrics,
         .mini-cols,
         .donut-wrap {
           grid-template-columns: 1fr;
@@ -1086,21 +1143,41 @@
           </article>
 
           <article class="card span-4">
-            <div class="fact-title">
+            <div class="fact-title fact-title-stack">
               <h3>Активы находятся в движении</h3>
-              <span class="fact-chip">Money in motion</span>
+              <span class="fact-chip">AUM flow</span>
             </div>
-            <div class="split" style="margin: 10px 0 14px">
-              <span class="split-a">14% add</span>
-              <span class="split-b">21% move</span>
-              <span class="split-c">9% switch</span>
+            <div class="split clean" style="margin: 8px 0 4px">
+              <span class="split-a"></span>
+              <span class="split-b"></span>
+              <span class="split-c"></span>
             </div>
-            <p><strong>44%</strong> wealth-клиентов планируют изменить отношения с провайдерами за ~3 года.</p>
-            <p>Более половины из них готовы перевести свыше 25% активов, а 11% — большую часть капитала.</p>
-            <div class="legend">
-              <span><i class="legend-dot" style="background: rgba(86, 207, 255, 0.55)"></i>добавить провайдера</span>
-              <span><i class="legend-dot" style="background: rgba(132, 241, 218, 0.48)"></i>перевести часть средств</span>
-              <span><i class="legend-dot" style="background: rgba(255, 145, 127, 0.48)"></i>полностью сменить</span>
+            <div class="split-metrics">
+              <div>
+                <strong style="color: #008cff">14%</strong>
+                <small>добавят нового провайдера</small>
+              </div>
+              <div>
+                <strong style="color: #0ea5c9">21%</strong>
+                <small>переведут часть капитала</small>
+              </div>
+              <div>
+                <strong style="color: #7c3aed">9%</strong>
+                <small>полностью сменят провайдера</small>
+              </div>
+            </div>
+            <p style="margin-top: 14px">
+              <strong>44%</strong> wealth-клиентов планируют изменить отношения с провайдерами за
+              ~3 года.
+            </p>
+            <p>
+              Более половины из них готовы перевести свыше 25% активов, а 11% — большую часть
+              капитала.
+            </p>
+            <div class="legend" style="margin-top: 10px">
+              <span><i class="legend-dot" style="background: rgba(86, 207, 255, 0.55)"></i>add provider</span>
+              <span><i class="legend-dot" style="background: rgba(132, 241, 218, 0.48)"></i>move money</span>
+              <span><i class="legend-dot" style="background: rgba(124, 58, 237, 0.4)"></i>switch</span>
             </div>
             <div class="cite" style="margin-top: 14px">
               <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
