@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Цифровое трение</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f1e7;
+        --panel: rgba(255, 255, 255, 0.82);
+        --text: #1e2b2a;
+        --muted: #5a6a68;
+        --accent: #0b6e69;
+        --accent-2: #d06d2a;
+        --border: rgba(11, 110, 105, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(208, 109, 42, 0.16), transparent 28%),
+          radial-gradient(circle at right, rgba(11, 110, 105, 0.18), transparent 24%),
+          linear-gradient(180deg, #efe7d6 0%, var(--bg) 100%);
+      }
+
+      main {
+        width: min(960px, calc(100% - 32px));
+        margin: 32px auto;
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: var(--panel);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 24px 60px rgba(35, 44, 43, 0.12);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 0.95;
+      }
+
+      p {
+        margin: 0 0 16px;
+        max-width: 60ch;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 20px 0 24px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button-primary {
+        color: #fff;
+        background: var(--accent);
+      }
+
+      .button-secondary {
+        color: var(--accent);
+        border-color: rgba(11, 110, 105, 0.24);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      video {
+        width: 100%;
+        display: block;
+        border-radius: 18px;
+        background: #000;
+      }
+
+      .footnote {
+        margin-top: 14px;
+        font-size: 0.95rem;
+      }
+
+      .footnote strong {
+        color: var(--accent-2);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Цифровое трение</h1>
+      <p>
+        Видео опубликовано через GitHub Pages. Его можно смотреть прямо на странице или открыть
+        как отдельный <code>.mp4</code> файл.
+      </p>
+      <div class="actions">
+        <a class="button button-primary" href="./digital-friction.mp4">Открыть MP4</a>
+        <a class="button button-secondary" href="./digital-friction.mp4" download>Скачать</a>
+      </div>
+      <video controls preload="metadata">
+        <source src="./digital-friction.mp4" type="video/mp4" />
+        Ваш браузер не поддерживает встроенное видео. Используйте ссылку выше.
+      </video>
+      <p class="footnote">
+        <strong>Прямая ссылка:</strong> <a href="./digital-friction.mp4">digital-friction.mp4</a>
+      </p>
+    </main>
+  </body>
+</html>
