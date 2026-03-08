@@ -3,124 +3,853 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Цифровое трение</title>
+    <title>Цифровое трение в wealth brokerage</title>
+    <meta
+      name="description"
+      content="Как mobile и web-клиентский опыт брокера для HNWI/UHNWI влияет на churn, AUM, share-of-wallet и прибыльность."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f6f1e7;
-        --panel: rgba(255, 255, 255, 0.82);
-        --text: #1e2b2a;
-        --muted: #5a6a68;
-        --accent: #0b6e69;
-        --accent-2: #d06d2a;
-        --border: rgba(11, 110, 105, 0.14);
+        color-scheme: dark;
+        --bg: #08111b;
+        --panel: rgba(10, 19, 30, 0.82);
+        --panel-2: rgba(13, 26, 40, 0.92);
+        --line: rgba(188, 212, 255, 0.14);
+        --text: #edf4ff;
+        --muted: #9fb4d2;
+        --aqua: #84f1da;
+        --cyan: #56cfff;
+        --gold: #ffd08b;
+        --coral: #ff917f;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: Georgia, "Times New Roman", serif;
+        font-family: "Sora", sans-serif;
         color: var(--text);
         background:
-          radial-gradient(circle at top left, rgba(208, 109, 42, 0.16), transparent 28%),
-          radial-gradient(circle at right, rgba(11, 110, 105, 0.18), transparent 24%),
-          linear-gradient(180deg, #efe7d6 0%, var(--bg) 100%);
+          radial-gradient(circle at top left, rgba(86, 207, 255, 0.16), transparent 24%),
+          radial-gradient(circle at top right, rgba(255, 145, 127, 0.16), transparent 20%),
+          radial-gradient(circle at 50% 90%, rgba(132, 241, 218, 0.12), transparent 26%),
+          linear-gradient(180deg, #08111b 0%, #0d1826 48%, #08111b 100%);
       }
 
-      main {
-        width: min(960px, calc(100% - 32px));
-        margin: 32px auto;
-        padding: 24px;
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        background: var(--panel);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 24px 60px rgba(35, 44, 43, 0.12);
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(circle at center, black 40%, transparent 92%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(calc(100% - 24px), 1240px);
+        margin: 0 auto;
+        padding: 20px 0 72px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 18px;
+        margin-bottom: 24px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(8, 17, 27, 0.72);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        color: #07131c;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--aqua), var(--cyan));
+      }
+
+      .brand-copy {
+        display: grid;
+        gap: 2px;
+      }
+
+      .brand-copy strong {
+        font-size: 0.96rem;
+      }
+
+      .brand-copy small,
+      .nav a,
+      .meta a,
+      .sources a,
+      .cite a {
+        color: var(--muted);
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .nav a {
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .section {
+        position: relative;
+        padding: 32px;
+        margin-bottom: 20px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(15, 28, 44, 0.92), rgba(8, 17, 27, 0.92));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 28%, transparent 70%, rgba(132, 241, 218, 0.04));
+      }
+
+      .section > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--aqua);
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      .big,
+      blockquote {
+        margin: 0;
+        line-height: 0.95;
+        font-family: "Instrument Serif", serif;
+        font-weight: 400;
+        letter-spacing: -0.03em;
       }
 
       h1 {
-        margin: 0 0 8px;
-        font-size: clamp(2rem, 5vw, 3.4rem);
-        line-height: 0.95;
+        font-size: clamp(3rem, 7vw, 6rem);
+        margin-bottom: 18px;
       }
 
-      p {
-        margin: 0 0 16px;
-        max-width: 60ch;
+      h1 span,
+      .big,
+      .metric strong {
+        color: var(--gold);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-bottom: 18px;
+      }
+
+      h3 {
+        margin: 0 0 10px;
+        font-size: 1.04rem;
+        line-height: 1.35;
+      }
+
+      p,
+      li {
         color: var(--muted);
-        font-size: 1.05rem;
-        line-height: 1.5;
+        line-height: 1.7;
       }
 
-      .actions {
+      .hero {
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 24px;
+        min-height: min(78vh, 920px);
+        align-items: center;
+      }
+
+      .actions,
+      .meta,
+      .cite,
+      .card-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin: 20px 0 24px;
       }
 
-      .button {
+      .button,
+      .pill {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         min-height: 44px;
-        padding: 0 18px;
+        padding: 0 16px;
         border-radius: 999px;
         border: 1px solid transparent;
+        font-size: 0.9rem;
         font-weight: 700;
         text-decoration: none;
+        transition: transform 220ms ease, border-color 220ms ease;
+      }
+
+      .button:hover,
+      .pill:hover {
+        transform: translateY(-2px);
       }
 
       .button-primary {
-        color: #fff;
-        background: var(--accent);
+        color: #06131c;
+        background: linear-gradient(135deg, var(--aqua), var(--cyan));
       }
 
       .button-secondary {
-        color: var(--accent);
-        border-color: rgba(11, 110, 105, 0.24);
-        background: rgba(255, 255, 255, 0.6);
+        border-color: rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.04);
       }
 
-      video {
+      .button-ghost,
+      .pill {
+        color: var(--gold);
+        border-color: rgba(255, 208, 139, 0.24);
+        background: rgba(255, 208, 139, 0.07);
+      }
+
+      .hero-grid,
+      .thesis-grid,
+      .facts-grid,
+      .roi-grid,
+      .quote-grid,
+      .sources {
+        display: grid;
+        gap: 16px;
+      }
+
+      .hero-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 24px;
+      }
+
+      .card,
+      .metric,
+      .quote-card,
+      .source-card,
+      .video-wrap {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .metric strong,
+      .big {
+        display: block;
+        margin-bottom: 8px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1;
+      }
+
+      .hero video,
+      .cover {
         width: 100%;
         display: block;
-        border-radius: 18px;
-        background: #000;
+        border-radius: 20px;
+        background: #02060b;
       }
 
-      .footnote {
-        margin-top: 14px;
-        font-size: 0.95rem;
+      .cover-card {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 16px;
+        margin-top: 16px;
       }
 
-      .footnote strong {
-        color: var(--accent-2);
+      .thesis-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .facts-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      .span-4 {
+        grid-column: span 4;
+      }
+
+      .span-6 {
+        grid-column: span 6;
+      }
+
+      .bar,
+      .split {
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .bar span,
+      .split span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .bar span {
+        width: var(--value);
+        background: linear-gradient(90deg, var(--cyan), var(--aqua));
+      }
+
+      .bar.alt span {
+        background: linear-gradient(90deg, var(--coral), var(--gold));
+      }
+
+      .split {
+        display: flex;
+        height: 84px;
+      }
+
+      .split span {
+        display: grid;
+        place-items: center;
+        font-size: 0.8rem;
+      }
+
+      .split-a {
+        width: 14%;
+        background: rgba(86, 207, 255, 0.38);
+      }
+
+      .split-b {
+        width: 21%;
+        background: rgba(132, 241, 218, 0.32);
+      }
+
+      .split-c {
+        width: 9%;
+        background: rgba(255, 145, 127, 0.34);
+      }
+
+      .roi-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+
+      .stack,
+      .quotes-mini {
+        display: grid;
+        gap: 12px;
+      }
+
+      .stack .card,
+      .quotes-mini .card {
+        padding: 16px;
+      }
+
+      .quote-grid,
+      .sources {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .source-card a,
+      .cite a,
+      .meta a {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      @media (max-width: 1080px) {
+        .hero,
+        .roi-grid,
+        .quote-grid,
+        .sources {
+          grid-template-columns: 1fr;
+        }
+
+        .thesis-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .span-4,
+        .span-6 {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .page {
+          width: min(calc(100% - 16px), 1240px);
+        }
+
+        .topbar {
+          position: static;
+          border-radius: 24px;
+        }
+
+        .nav {
+          display: none;
+        }
+
+        .section {
+          padding: 22px;
+        }
+
+        .hero-grid,
+        .thesis-grid,
+        .cover-card,
+        .quote-grid,
+        .sources,
+        .facts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .span-4,
+        .span-6 {
+          grid-column: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Цифровое трение</h1>
-      <p>
-        Видео опубликовано через GitHub Pages. Его можно смотреть прямо на странице или открыть
-        как отдельный <code>.mp4</code> файл.
-      </p>
-      <div class="actions">
-        <a class="button button-primary" href="./digital-friction.mp4">Открыть MP4</a>
-        <a class="button button-secondary" href="./digital-friction.mp4" download>Скачать</a>
-      </div>
-      <video controls preload="metadata">
-        <source src="./digital-friction.mp4" type="video/mp4" />
-        Ваш браузер не поддерживает встроенное видео. Используйте ссылку выше.
-      </video>
-      <p class="footnote">
-        <strong>Прямая ссылка:</strong> <a href="./digital-friction.mp4">digital-friction.mp4</a>
-      </p>
+    <main class="page">
+      <header class="topbar">
+        <a class="brand" href="#top">
+          <span class="brand-mark">DX</span>
+          <span class="brand-copy">
+            <strong>Digital Friction</strong>
+            <small>HNWI / UHNWI research landing</small>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Sections">
+          <a href="#facts">Факты</a>
+          <a href="#roi">ROI</a>
+          <a href="#quotes">Цитаты</a>
+          <a href="#sources">Источники</a>
+        </nav>
+      </header>
+
+      <section class="section hero reveal" id="top">
+        <div>
+          <p class="eyebrow">Research x Product x Wealth Management</p>
+          <h1>
+            Цифровое трение:
+            <span>как mobile и web брокера влияют на AUM, churn и прибыль</span>
+          </h1>
+          <p>
+            Эта страница собрана на основе приложенного исследования о том, как клиентский
+            digital-опыт брокера в сегменте HNWI/UHNWI влияет на удержание активов, долю
+            кошелька, торговую активность и cost-to-serve. Видео и PDF доступны на этой же GitHub
+            Pages-публикации.
+          </p>
+          <div class="actions">
+            <a class="button button-primary" href="#video">Смотреть видео</a>
+            <a
+              class="button button-secondary"
+              href="./hnwi-digital-experience-research.pdf"
+              target="_blank"
+              rel="noreferrer"
+              >Открыть PDF</a
+            >
+            <a class="button button-ghost" href="./hnwi-digital-experience-research.pdf" download
+              >Скачать исследование</a
+            >
+          </div>
+          <div class="meta">
+            <a href="./hnwi-digital-experience-research.pdf#page=1">Исследование, стр. 1</a>
+            <a href="./hnwi-digital-experience-research.pdf#page=14">Библиография, стр. 14-16</a>
+            <a href="./digital-friction.mp4">Прямая ссылка на MP4</a>
+          </div>
+
+          <div class="hero-grid">
+            <article class="metric">
+              <strong>55%</strong>
+              <p>HNWI считают digital-опыт критичным при выборе wealth-провайдера.</p>
+            </article>
+            <article class="metric">
+              <strong>44%</strong>
+              <p>wealth-клиентов готовы менять или расширять отношения с провайдерами.</p>
+            </article>
+            <article class="metric">
+              <strong>62%</strong>
+              <p>Next-gen HNWI готовы последовать за RM при его переходе в другую фирму.</p>
+            </article>
+            <article class="metric">
+              <strong>5.2 трлн ₽</strong>
+              <p>в РФ сосредоточено у ~11.5 тыс. клиентов с портфелем свыше 100 млн ₽.</p>
+            </article>
+          </div>
+        </div>
+
+        <div>
+          <div class="video-wrap" id="video">
+            <p class="eyebrow">Published asset</p>
+            <h3>Видео исследования</h3>
+            <video controls preload="metadata" playsinline poster="./research-cover.png">
+              <source src="./digital-friction.mp4" type="video/mp4" />
+              Ваш браузер не поддерживает встроенное видео.
+            </video>
+            <div class="card-actions" style="margin-top: 14px">
+              <a href="./digital-friction.mp4" target="_blank" rel="noreferrer">Открыть MP4</a>
+              <a href="./digital-friction.mp4" download>Скачать видео</a>
+            </div>
+          </div>
+
+          <div class="card cover-card" style="margin-top: 16px">
+            <img class="cover" src="./research-cover.png" alt="Обложка исследования" />
+            <div>
+              <p class="eyebrow">Attached research</p>
+              <h3>Полный PDF исследования</h3>
+              <p>
+                16 страниц: executive summary, доказательная база, карта метрик, приоритизация
+                фич по ROI и список первоисточников.
+              </p>
+              <div class="card-actions" style="margin-top: 14px">
+                <a href="./hnwi-digital-experience-research.pdf" target="_blank" rel="noreferrer"
+                  >Открыть PDF</a
+                >
+                <a href="./hnwi-digital-experience-research.pdf" download>Скачать PDF</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <p class="eyebrow">Core thesis</p>
+        <h2>Digital влияет на P&amp;L через четыре конкретных механизма</h2>
+        <div class="thesis-grid">
+          <article class="card">
+            <h3>01. Удержание активов</h3>
+            <p>Снижение цифрового трения уменьшает wallet erosion и AUM attrition.</p>
+          </article>
+          <article class="card">
+            <h3>02. Рост share-of-wallet</h3>
+            <p>Holistic view и персональные инсайты помогают собрать большую долю капитала.</p>
+          </article>
+          <article class="card">
+            <h3>03. Активность и доход</h3>
+            <p>Low-friction execution и self-service повышают частоту действий и сделок.</p>
+          </article>
+          <article class="card">
+            <h3>04. Снижение cost-to-serve</h3>
+            <p>Автоматизация и RM-tooling разгружают ops, support и ручные исключения.</p>
+          </article>
+        </div>
+        <div class="card" style="margin-top: 16px">
+          <blockquote>
+            «Цифровой фронт — не замена, а усилитель (или разрушитель) этого доверия».
+          </blockquote>
+          <div class="cite" style="margin-top: 12px">
+            <a href="./hnwi-digital-experience-research.pdf#page=1">Исследование, стр. 1-2</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="facts">
+        <p class="eyebrow">Evidence snapshot</p>
+        <h2>Ключевые факты и where the money moves</h2>
+        <div class="facts-grid">
+          <article class="card span-4">
+            <h3>Digital уже влияет на выбор провайдера</h3>
+            <p>55% HNWI считают digital-опыт критичным при выборе wealth-фирмы.</p>
+            <div class="bar" style="margin: 14px 0 10px; --value: 55%">
+              <span></span>
+            </div>
+            <p>47% недовольны цифровым интерфейсом текущего провайдера.</p>
+            <div class="bar alt" style="margin-top: 14px; --value: 47%">
+              <span></span>
+            </div>
+            <div class="cite" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf#page=1">PDF, стр. 1</a>
+            </div>
+          </article>
+
+          <article class="card span-4">
+            <h3>Активы находятся в движении</h3>
+            <div class="split" style="margin: 10px 0 14px">
+              <span class="split-a">14% add</span>
+              <span class="split-b">21% move</span>
+              <span class="split-c">9% switch</span>
+            </div>
+            <p>44% wealth-клиентов планируют изменить отношения с провайдерами за ~3 года.</p>
+            <p>Более половины из них готовы перевести свыше 25% активов.</p>
+            <div class="cite" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
+            </div>
+          </article>
+
+          <article class="card span-4">
+            <h3>Удержание RM = удержание AUM</h3>
+            <p><span class="big">62%</span> Next-gen HNWI готовы последовать за RM.</p>
+            <p><span class="big">56%</span> RM считают, что фирма не даёт нужных инструментов.</p>
+            <div class="cite" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
+            </div>
+          </article>
+
+          <article class="card span-6">
+            <h3>Верхний сегмент непропорционально влияет на прибыль</h3>
+            <p>
+              <span class="big">11.5 тыс.</span>
+              клиентов с портфелем свыше 100 млн ₽ контролировали около 5.2 трлн ₽, то есть
+              примерно 49% активов физлиц у брокеров на конец 2024 года.
+            </p>
+            <div class="bar" style="margin-top: 16px; --value: 49%">
+              <span></span>
+            </div>
+            <div class="cite" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf#page=1">PDF, стр. 1</a>
+            </div>
+          </article>
+
+          <article class="card span-6">
+            <h3>Запрос смещается от “сохранить” к “управлять сложностью”</h3>
+            <p><span class="big">78%</span> UHNWI считают value-added услуги essential.</p>
+            <p><span class="big">65%</span> HNWI беспокоит нехватка персонализированного advice.</p>
+            <p><span class="big">+72 / +47</span> пункта satisfaction дают virtual assistants у advised / DIY сегментов.</p>
+            <div class="cite" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf#page=3">PDF, стр. 3</a>
+              <a href="./hnwi-digital-experience-research.pdf#page=4">PDF, стр. 4</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="roi">
+        <p class="eyebrow">Causal model and ROI</p>
+        <h2>Что даёт ROI и как это измерять</h2>
+        <div class="roi-grid">
+          <div class="stack">
+            <article class="card">
+              <h3>От DX-рычагов к P&amp;L</h3>
+              <p>
+                Performance, self-service, personalization, security confidence, RM integration и
+                omnichannel consistency влияют на completion rate, engagement, churn propensity,
+                support contacts и далее на revenue, AUM inflows и cost-to-serve.
+              </p>
+              <div class="cite" style="margin-top: 12px">
+                <a href="./hnwi-digital-experience-research.pdf#page=8">PDF, стр. 8</a>
+              </div>
+            </article>
+            <article class="card">
+              <h3>Приоритеты mobile / web по ROI</h3>
+              <p>
+                1. Performance &amp; trust baseline. 2. RM-centric omnichannel. 3. Holistic client
+                view. 4. Personalized insights. 5. Self-service journeys и bounded assistant. 6.
+                Low-friction order capture.
+              </p>
+              <div class="cite" style="margin-top: 12px">
+                <a href="./hnwi-digital-experience-research.pdf#page=11">PDF, стр. 11</a>
+                <a href="./hnwi-digital-experience-research.pdf#page=12">PDF, стр. 12</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="quotes-mini">
+            <article class="card">
+              <h3>Cohort retention + AUM survival</h3>
+              <p>Считать отдельно account churn и AUM attrition, чтобы видеть частичный отъезд активов раньше полного ухода.</p>
+            </article>
+            <article class="card">
+              <h3>Wave rollout вместо грубого A/B</h3>
+              <p>Для HNWI безопаснее запускать фичи волнами и смотреть difference-in-differences по RM-пулам, регионам и каналам.</p>
+            </article>
+            <article class="card">
+              <h3>RM tooling как KPI</h3>
+              <p>Удержание RM, время на non-client tasks и качество RM tools должны входить в KPI-систему продукта.</p>
+            </article>
+            <article class="card">
+              <h3>Не путать продукт с рынком</h3>
+              <p>При анализе AUM и активности отделять эффект рынка, волатильности, советов и налоговых факторов от эффекта интерфейса.</p>
+            </article>
+            <div class="cite">
+              <a href="./hnwi-digital-experience-research.pdf#page=9">PDF, стр. 9</a>
+              <a href="./hnwi-digital-experience-research.pdf#page=10">PDF, стр. 10</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="quotes">
+        <p class="eyebrow">Direct quotes</p>
+        <h2>Три тезиса, которые задают рамку решения</h2>
+        <div class="quote-grid">
+          <article class="quote-card">
+            <blockquote>«Цифровой фронт — не замена, а усилитель этого доверия».</blockquote>
+            <div class="cite" style="margin-top: 12px">
+              <a href="./hnwi-digital-experience-research.pdf#page=1">Исследование, стр. 1</a>
+            </div>
+          </article>
+          <article class="quote-card">
+            <blockquote>«Mobile vs web — ложная дихотомия».</blockquote>
+            <div class="cite" style="margin-top: 12px">
+              <a href="./hnwi-digital-experience-research.pdf#page=4">Исследование, стр. 4</a>
+            </div>
+          </article>
+          <article class="quote-card">
+            <blockquote>«Удержание AUM high-tier — прямой драйвер прибыли».</blockquote>
+            <div class="cite" style="margin-top: 12px">
+              <a href="./hnwi-digital-experience-research.pdf#page=6">Исследование, стр. 6</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <p class="eyebrow">Attached materials</p>
+        <h2>Материалы на этой GitHub Pages-публикации</h2>
+        <div class="quote-grid">
+          <article class="quote-card">
+            <h3>Видео: Цифровое_трение.mp4</h3>
+            <p>Уже опубликованный ролик, переиспользованный на этой странице без внешнего хостинга.</p>
+            <div class="card-actions" style="margin-top: 14px">
+              <a href="./digital-friction.mp4" target="_blank" rel="noreferrer">Открыть</a>
+              <a href="./digital-friction.mp4" download>Скачать</a>
+            </div>
+          </article>
+          <article class="quote-card">
+            <h3>Полный PDF исследования</h3>
+            <p>16 страниц с summary, таблицами эффектов, картой KPI и библиографией первичных источников.</p>
+            <div class="card-actions" style="margin-top: 14px">
+              <a href="./hnwi-digital-experience-research.pdf" target="_blank" rel="noreferrer">Открыть</a>
+              <a href="./hnwi-digital-experience-research.pdf" download>Скачать</a>
+            </div>
+          </article>
+          <article class="quote-card">
+            <h3>Обложка / preview</h3>
+            <p>На странице используется рендер первой страницы PDF как обложка и poster для доступа к материалу.</p>
+            <div class="card-actions" style="margin-top: 14px">
+              <a href="./research-cover.png" target="_blank" rel="noreferrer">Открыть PNG</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="sources">
+        <p class="eyebrow">Sources</p>
+        <h2>Ссылки на исследование и ключевые первоисточники</h2>
+        <p>
+          Все цифры на странице сведены из приложенного PDF. Полная библиография находится в самом
+          исследовании на стр. 14-16; ниже вынесены ключевые внешние источники из этого списка.
+        </p>
+        <div class="sources">
+          <article class="source-card">
+            <h3>Приложенное исследование</h3>
+            <a href="./hnwi-digital-experience-research.pdf" target="_blank" rel="noreferrer">Открыть PDF</a>
+          </article>
+          <article class="source-card">
+            <h3>Capgemini World Wealth Report 2024</h3>
+            <a href="https://www.capgemini.com/wp-content/uploads/2024/06/06_05_World-Wealth-Report-2024_ENG.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>Capgemini: Capturing HNWI loyalty across generations</h3>
+            <a href="https://www.capgemini.com/wp-content/uploads/2025/07/HNWI-Loyalty-Risks-AI.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>EY: assets in flux</h3>
+            <a href="https://www.ey.com/en_us/insights/wealth-asset-management/where-can-wealth-managers-find-opportunity-when-assets-are-in-flux" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>J.D. Power Wealth Management DX Study 2025</h3>
+            <a href="https://www.jdpower.com/sites/default/files/file/2025-11-19/2025156%20U.S.%20Wealth%20Management%20Digital%20Experience%20Study.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>Банк России, брокеры, IV кв. 2024</h3>
+            <a href="https://www.cbr.ru/collection/collection/file/55198/review_broker_q4_2024.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>Банк России, брокеры, II кв. 2025</h3>
+            <a href="https://www.cbr.ru/Collection/Collection/File/57211/review_broker_Q2_2025.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>Accenture Global Banking Consumer Study 2025</h3>
+            <a href="https://www.accenture.com/content/dam/accenture/final/industry/banking/document/Accenture-Global-Banking-Consumer-Study-2025-Report.pdf" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+          <article class="source-card">
+            <h3>McKinsey Experience-led growth</h3>
+            <a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/experience-led-growth-a-new-way-to-create-value" target="_blank" rel="noreferrer">Открыть</a>
+          </article>
+        </div>
+      </section>
     </main>
+
+    <script>
+      const sections = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -6% 0px" },
+      );
+      sections.forEach((section) => observer.observe(section));
+    </script>
   </body>
 </html>
